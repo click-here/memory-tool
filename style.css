@@ -1,0 +1,92 @@
+.container {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr minmax(50px, 100vh) 1fr;
+	grid-template-areas:
+		"title"
+		"main"
+		"footer";
+	height: 100vh;
+}
+
+@media screen and (max-width: 799px){
+	.rightbar,
+	.leftbar {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	.container {
+		grid-template-columns: 1fr 8fr 1fr;
+		grid-template-areas:
+		"leftbar title rightbar"
+		"leftbar main rightbar"
+		"leftbar footer rightbar";
+
+	}
+	.rightbar {
+		grid-area: rightbar;
+		background-color: #E71D36;
+	}
+	.leftbar {
+		grid-area:leftbar;
+		background-color: #E71D36;
+	}
+}
+
+body {
+	margin: 0;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+	font-family: 'Source Sans Pro', 'Helvetica', 'Arial', sans-serif;
+	font-size: 18px;
+	line-height: 1.5;
+}
+
+.site {
+	margin: 1em;
+}
+
+.page-title,
+.main-content,
+.footer-content {
+    padding: 1em;
+    color: #011627;
+}
+
+.page-title { 
+	grid-area: title;
+	background-color: #FF9F1C;
+}
+
+.main-content {
+	grid-area:main;
+	background-color: #FDFFFC;
+
+}
+
+.footer-content {
+	grid-area:footer;
+	background-color: #2EC4B6;
+}
+
+.quote-word {
+    display: inline-block;
+    padding-left:.5em;
+}
+.quote-word:hover {
+    cursor: pointer;
+}
+
+.hidden-word {
+    color: white;
+    display: inline-block;
+    margin-left:.5em;
+    border:1px solid black;
+}
