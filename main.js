@@ -20,6 +20,7 @@ var addQuote = function(quote_text){
 
         var wordDiv = document.createElement("div");
         wordDiv.setAttribute("class","quote-word");
+        wordDiv.classList.add("not-guessed");
         wordDiv.textContent = item;
         quoteParagraph.appendChild(wordDiv); 
 
@@ -39,10 +40,41 @@ var hideSomeWords = function(){
 
     Object.values(wordElems).forEach(function(item,index){
         if (slicedRng.includes(index)) {
-            item.classList.remove("quote-word");
+            // item.classList.remove("quote-word");
             item.classList.add("hidden-word");
         
         }
     })
 }
-hideSomeWords()
+
+var correct_guesses = 0;
+var incorrect_guesses = 0;
+
+var getUsersLetters = function(e){
+    var wordElems = document.getElementsByClassName("not-guessed");
+    var first_word = wordElems[0];
+    var first_letter = first_word.innerText[0].toLowerCase()
+    if (e.key.toLowerCase() === first_letter){
+        correct_guesses += 1
+        first_word.classList.add("correctly-guessed");
+        first_word.classList.remove("not-guessed");
+        first_word.classList.remove("hidden-word");
+    } else {
+        incorrect_guesses += 1;
+    }
+    var total_guesses = correct_guesses + incorrect_guesses;
+    var accuracy = correct_guesses/total_guesses;
+    accuracyElem = document.getElementById("accuracy");
+    accuracyElem.innerText = Math.round(100 * accuracy);
+    
+
+
+    e.target.value = "";
+}
+
+var cleanQuoteArray = function(){
+    // from https://stackoverflow.com/a/4328722
+    var punctuationless = quote_text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    var finalString = punctuationless.replace(/\s{2,}/g," ");
+    return finalString.split(' ');
+}

@@ -90,3 +90,10 @@ textarea {
     margin-left:.5em;
     border:1px solid black;
 }
+
+.correctly-guessed {
+    color:green;
+}
+.not-guessed {
+    /* color:black; */
+}
