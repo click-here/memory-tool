@@ -20,6 +20,8 @@ var addQuote = function(quote_text){
 
         var wordDiv = document.createElement("div");
         wordDiv.setAttribute("class","quote-word");
+        wordDiv.setAttribute("onclick",);
+        onclick="toggleWords(event);"
         wordDiv.classList.add("not-guessed");
         wordDiv.textContent = item;
         quoteParagraph.appendChild(wordDiv); 
@@ -46,9 +48,31 @@ var hideSomeWords = function(){
         }
     })
 }
+var toggleWords = function(e){
+    hideOrShow = e.target.innerText.split(' ')[0];
+
+    var wordElems = document.getElementsByClassName("quote-word");
+    Object.values(wordElems).forEach(function(item){
+        if (hideOrShow === "Hide") {
+            item.classList.add("hidden-word");
+            e.target.innerText = "Show All Words";
+        } else {
+            item.classList.remove("hidden-word");
+            e.target.innerText = "Hide All Words";
+        }
+        
+    })
+}
+
+
+
+// TODO
+// 1. if you get a word wrong 3 times it shows it.
+// 2. you can click on a word to show/hide
 
 var correct_guesses = 0;
 var incorrect_guesses = 0;
+var incorrect_series_count = 0;
 
 var getUsersLetters = function(e){
     var wordElems = document.getElementsByClassName("not-guessed");
@@ -59,17 +83,22 @@ var getUsersLetters = function(e){
         first_word.classList.add("correctly-guessed");
         first_word.classList.remove("not-guessed");
         first_word.classList.remove("hidden-word");
+        incorrect_series_count = 0;
     } else {
         incorrect_guesses += 1;
+        incorrect_series_count += 1;
+    }
+    if (incorrect_series_count === 3) {
+        first_word.classList.add("failed-to-guess");
+        first_word.classList.remove("not-guessed");
+        first_word.classList.remove("hidden-word");
     }
     var total_guesses = correct_guesses + incorrect_guesses;
-    var accuracy = correct_guesses/total_guesses;
+    var accuracy = correct_guesses / total_guesses;
     accuracyElem = document.getElementById("accuracy");
     accuracyElem.innerText = Math.round(100 * accuracy);
     
-
-
-    e.target.value = "";
+    e.target.value = ""; // clear input box
 }
 
 var cleanQuoteArray = function(){

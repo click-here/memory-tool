@@ -94,6 +94,19 @@ textarea {
 .correctly-guessed {
     color:green;
 }
+.failed-to-guess {
+    color:red;
+}
 .not-guessed {
     /* color:black; */
 }
+
+/* Brainstorming possible word states for classes */
+/* 
+
+1. black regular shown
+2. 3 errors shown
+3. Hidden word
+4. Correctly guessed
+
+*/
