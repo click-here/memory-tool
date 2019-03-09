@@ -20,8 +20,7 @@ var addQuote = function(quote_text){
 
         var wordDiv = document.createElement("div");
         wordDiv.setAttribute("class","quote-word");
-        wordDiv.setAttribute("onclick",);
-        onclick="toggleWords(event);"
+        wordDiv.setAttribute("onclick","hideWord(event);");
         wordDiv.classList.add("not-guessed");
         wordDiv.textContent = item;
         quoteParagraph.appendChild(wordDiv); 
@@ -31,6 +30,15 @@ var addQuote = function(quote_text){
 }
 addQuote(quote_text);
 
+var hideWord = function(e){
+    targetClasses = e.target.classList
+    if (Object.values(targetClasses).includes('hidden-word')) {
+        e.target.classList.remove("hidden-word");
+    } else {
+        e.target.classList.add("hidden-word");  
+    }
+}
+
 var hideSomeWords = function(){
     var wordElems = document.getElementsByClassName("quote-word");
     var wordCnt = wordElems.length;    
@@ -38,13 +46,12 @@ var hideSomeWords = function(){
     rng = shuffle(rng);
 
     hideAmount = 0.05 * wordCnt;
+    console.log(hideAmount)
     slicedRng = rng.slice(0,hideAmount);
 
     Object.values(wordElems).forEach(function(item,index){
         if (slicedRng.includes(index)) {
-            // item.classList.remove("quote-word");
-            item.classList.add("hidden-word");
-        
+            item.classList.add("hidden-word");        
         }
     })
 }
